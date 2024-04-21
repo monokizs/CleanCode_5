@@ -8,6 +8,7 @@ describe('Employee tests', () => {
 
         // Act
         const result =  employee.calculateSalary();
+        
 
         // Assert
         expect(result).toBe(expectedSalary);
