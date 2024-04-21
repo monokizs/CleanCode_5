@@ -11,7 +11,7 @@ export class School {
     getStudentCount(): number { 
         let totalStudents = 0; 
         for (const schoolClass of this.classes) { 
-            totalStudents += schoolClass.getStudents().length; 
+            totalStudents += schoolClass.getNumberOfStudents(); 
         } 
         
         return totalStudents; 
