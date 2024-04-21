@@ -1,20 +1,23 @@
 import { CartItem } from "./cartItem";
+import { Order } from "./order";
+import { Product } from "./product";
 
 export class ShoppingCart { 
     private items: CartItem[] = []; 
     
     constructor() {} 
     
-    addItem(product: string, price: number): void { 
-        const newItem = new CartItem(product, price); 
+    public addItem(product: Product): void { 
+        const newItem = new CartItem(product); 
         this.items.push(newItem); 
     } 
     
-    calculateTotal(): number { 
-        let total = 0; 
-        for (const item of this.items) { 
-            total += item.price; 
-        } 
-        return total; 
-    } 
+    public createOrder(): Order {
+        return new Order(this.items);
+    }
+
+    public calculateTotal(): number {
+        const order = this.createOrder();
+        return order.calculateTotal();
+      }
 }

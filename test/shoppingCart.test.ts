@@ -1,9 +1,11 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { CartItem } from '../src/cartItem';
 import { ShoppingCart } from '../src/shoppingCart';
+import { Product } from '../src/product';
 
 
 const mockedCartItem = mock<CartItem>();
+
 
 describe('school tests',() =>{
     let sut: ShoppingCart;
@@ -14,21 +16,43 @@ describe('school tests',() =>{
     })
 
     it('should return zero for an empty Cart', () => {
-        // Arrange (no setup needed, empty school by default)
+        // Arrange 
       
         // Act
         const actualResult = sut.calculateTotal();
       
         // Assert
-        expect(actualResult).toBe(0);
+        expect(actualResult).toEqual(0);
       });
 
-    it('should return one 500Ft item', ()=>{
-        //Arrange
-        const expectedResult=300;
-        sut.addItem('bigyo', 100);
-        sut.addItem('bigyo', 200);
+      it("should return total for single item", () => {
+        // Arrange
         
+        const product = new Product("bigyo", 300);
+        sut.addItem(product);
+    
+        // Act
+        const total = sut.calculateTotal();
+    
+        // Assert
+        expect(total).toEqual(300); // Expect total to be the item's price
+      });
+
+
+
+    it('should calculate total for multiple items', ()=>{
+        //Arrange
+        const mockedProducts = [
+            new Product("bigyo", 300),
+            new Product("kigyo", 500),
+            new Product("begyo", 200),
+          ];
+
+        const expectedResult=1000;
+        
+        for (const product of mockedProducts) {
+            sut.addItem(product); 
+        }
 
         //Act
         const actualResult =  sut.calculateTotal();
