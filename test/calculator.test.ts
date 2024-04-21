@@ -12,7 +12,7 @@ describe("Calculator tests", () => {
         let calculator = new Calculator();
 
         // Act
-        const result = calculator.calculateDiscountPercentage(level);
+        const result = calculator.createDiscountPercentage(level);
 
         // Assert
         expect(result).toBe(expectedResult);

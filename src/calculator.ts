@@ -1,20 +1,39 @@
 export class Calculator {
 
-    public calculateDiscountPercentage(level: string): number { 
-        
-        let discountPercentage: number; 
-        
-        switch (level) { 
-            case "standard": discountPercentage = 5; break; 
-            case "silver": discountPercentage = 10; break; 
-            case "gold": discountPercentage = 15; break; 
-            default: discountPercentage = 0; break; 
-        } 
+    private discountClasses: {[level: string]: new () => DiscountPercentage} = {
+        'standard': StandardDiscountPercentage,
+        'silver': SilverDiscountPercentage,
+        'gold': GoldDiscountPercentage
+    };
 
-        if (level === "gold") { 
-            // Additional discount for gold members 
-            discountPercentage += 5; 
-        } 
-        return discountPercentage;
+    public createDiscountPercentage(level: string): number | 0 {
+        const DiscountClass = this.discountClasses[level];
+        return DiscountClass ? new DiscountClass().percentage(): 0;
     }
 }
+
+abstract class DiscountPercentage {
+    abstract percentage(): number;
+}
+
+class StandardDiscountPercentage extends DiscountPercentage{
+    percentage(): number{
+        return 5;
+    };
+}
+
+class SilverDiscountPercentage extends DiscountPercentage{
+    percentage(): number{
+        return 10;
+    };
+}
+
+class GoldDiscountPercentage extends DiscountPercentage{
+    percentage(): number{
+        return 20;
+    };
+}
+
+
+
+
